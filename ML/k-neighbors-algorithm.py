@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsClassifier
-
+  
 
 # 도미 길이 데이터
 bream_length = [25.4, 26.3, 26.5, 29.0, 29.0, 29.7, 29.7, 30.0, 30.0, 30.7, 31.0, 31.0,
