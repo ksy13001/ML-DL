@@ -19,11 +19,14 @@ smelt_weight = [6.7, 7.5, 7.0, 9.7, 9.8, 8.7, 10.0, 9.9, 9.8, 12.2, 13.4, 12.2, 
 length = bream_length + smelt_length
 weight = bream_weight + smelt_weight
 # k 최근접 알고리즘에서 데이터는 이중리스트 사용
+# 입력 데이터
 fish_data = [[length[i], weight[i]] for i in range(len(length))]
 
 # 정답 리스트, 찾을려는 생선(도미) - 1, 빙어 - 0
 # 찾을려는 대상 -> 1, 나머지 -> 0
+# 타깃 데이터
 fish_target = [1]*35 + [0]*14
+# 입력 데이터 + 타깃 데이터 -> 훈련 데이터 / 지도 학습은 훈련 데이터가 필요함
 
 # k-최근접 이웃 알고리즘 : 어떤 데이터의 답을 구할때 주위 데이터를 보고 다수를 차지하는 것을 정답으로 사용, 주위 데이터로 현재 데이터 판단
 # 가장 가까운 직선거리의 데이터를 탐색하기 때문에 데이터 수가 너무 많으면 속도 느려짐
@@ -38,13 +41,13 @@ kn40.fit(fish_data, fish_target)
 # score() -> 모델 평가 메서드 : 0 ~ 1 사이의 값(정확도), 1 일 경우, 모든 데이터가 정확히 맞다 / 정확도 = (맞춘 데이터 개수) / (전체 데이터 개수)
 print('kn.score : ', kn.score(fish_data, fish_target))
 print(kn._fit_X)
-
 print('kn40.score : ', kn40.score(fish_data, fish_target)) # 도미의 데이터 개수가 35개기 때문에 어떤 데이터를 넣어도 도미로 판단함(=빙어도 도미로 판단)
 
 #predict() -> 주위 데이터를 보고 새로운 데이터의 정답을 예측
 print(kn.predict([[30, 600]]))
 
 #--------------- p64 실습 ------------------------------
+# 주위 데이터 (n_neighbors) 값을 바꾸며 비교할 때 마다 객체 생성할 필요 x, 반복문 - kn.n_neighbors = i 로 설정하면 됨
 """
 for i in range(5, 50):
     kn.n_neighbors = i
