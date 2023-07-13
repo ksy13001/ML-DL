@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
-from sklearn.neighbors import KNeighborsRegressor
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
@@ -20,39 +18,44 @@ perch_weight = np.array([5.9, 32.0, 40.0, 51.5, 70.0, 100.0, 78.0, 80.0, 85.0, 8
                          556.0, 840.0, 685.0, 700.0, 700.0, 690.0, 900.0, 650.0, 820.0,
                          850.0, 900.0, 1015.0, 820.0, 1100.0, 1000.0, 1100.0, 1000.0,
                          1000.0])
-# ------------------------- 훈련 세트, 테스트 세트 준비 -------------------------------------
-train_input, test_input, train_target, test_target = train_test_split(perch_length, perch_weight, random_state=42)
+
+# ------------------------- 훈련 세트, 테스트 세트 준비 -----------------------------------------
+train_input , test_input, train_target, test_target = train_test_split(perch_length, perch_weight, random_state=42)
 train_input = np.reshape(train_input, (-1, 1))
 test_input = np.reshape(test_input, (-1, 1))
 
-# -------------------------- 선형 회귀 모델 훈련 -------------------------------------------
-w = 50
+# -------------------------- 선형 회귀 모델 훈련 ------------------------------------------------
 lr = LinearRegression()
 lr.fit(train_input, train_target)
-p = lr.predict([[w]])
-print('predict weight : ', p)
+print('1차 훈련 score : ', lr.score(train_input, train_target))
+print('1차 테스트 score : ', lr.score(test_input, test_target))
+print('길이 50인 물고기 무게 예측 :', *lr.predict([[50]]))
 # lr.coef_ : 기울기 / lr.intercept : y 절편 / 둘 다 ML 알고리즘이 찾은 값 -> 모델 파라미터(대부분의 ML 알고리즘은 최적의 모델 파라미터를 찾는 알고리즘)
-print(lr.coef_, lr.intercept_)  # [39.017144] - 709.01864
-print('----------------------1차 방정식---------------------')
-print('훈련 세트 score : ', lr.score(train_input, train_target))
-print('테스트 세트 score : ', lr.score(test_input, test_target))
+print('기울기 ,절편 :', lr.coef_, lr.intercept_)  # [39.01714496] -709.0186449535474
+print()
 
-# --------------------------- 2차 방정식 선형 회귀 모델 ------------------------------------------
-train_poly = np.column_stack((train_input ** 2, train_input))
-test_poly = np.column_stack((test_input ** 2, test_input))
-lr.fit(train_poly, train_target)
-p = lr.predict([[w**2, w]])
-print(lr.coef_, lr.intercept_)
-print('----------------------다항 회귀--------------------')
-print('훈련 세트 score :', lr.score(train_poly, train_target))
-print('테스트 세트 score :', lr.score(test_poly, test_target))
-# --------------------------------- 그래프 ------------------------------------------------------
+# -------------------------- 선형 회귀 모델 그래프 -----------------------------------------------
+r = [15, 50]
 plt.scatter(train_input, train_target)
-point = np.arange(15, w)
-print('point :', point)
-# plt.plot([15, 50], [15*lr.coef_+lr.intercept_, 50*lr.coef_+lr.intercept_])
-plt.plot(point, 1.01*point**2 - 21.55*point + 116.05)
-plt.scatter(w, p, marker='^')
+plt.scatter(50, 1241, marker='D')
+plt.plot(r, lr.coef_*r + lr.intercept_, 'r')
 plt.xlabel('length')
 plt.ylabel('weight')
+plt.show()
+
+# --------------------------- 2차 방정식 선형 회귀 모델 ------------------------------------------
+# 2차 방정식 이므로 훈련세트를 제곱해서 1열 늘려 줘야 한다.
+train_poly = np.column_stack((train_input**2, train_input))
+test_poly = np.column_stack((test_input**2, test_input))
+lr.fit(train_poly, train_target)
+print('2차 훈련 score : ', lr.score(train_poly, train_target))
+print('2차 테스트 score :', lr.score(test_poly, test_target))
+print('길이 50인 물고기 무게 예측 :', *lr.predict([[50**2, 50]])) #1573
+print('기울기 ,절편 :', lr.coef_, lr.intercept_) #[  1.01433211 -21.55792498] 116.05021078278259
+
+# ---------------------------2차 방정식 선형 회귀 모델 그래프 ---------------------------------------
+r = np.arange(15, 50) # 리스트 사용시 연산 안됨
+plt.scatter(train_input, train_target)
+plt.scatter(50, 1573, marker='D')
+plt.plot(r, lr.coef_[0]*(r**2) +lr.coef_[1]*r + lr.intercept_, 'r')
 plt.show()
