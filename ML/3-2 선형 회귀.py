@@ -30,8 +30,8 @@ lr.fit(train_input, train_target)
 print('1차 훈련 score : ', lr.score(train_input, train_target))
 print('1차 테스트 score : ', lr.score(test_input, test_target))
 print('길이 50인 물고기 무게 예측 :', *lr.predict([[50]]))
-# lr.coef_ : 기울기 / lr.intercept : y 절편 / 둘 다 ML 알고리즘이 찾은 값 -> 모델 파라미터(대부분의 ML 알고리즘은 최적의 모델 파라미터를 찾는 알고리즘)
-print('기울기 ,절편 :', lr.coef_, lr.intercept_)  # [39.01714496] -709.0186449535474
+# lr.coef_ : 방정식 계수 / lr.intercept : y 절편 / 둘 다 ML 알고리즘이 찾은 값 -> 모델 파라미터(대부분의 ML 알고리즘은 최적의 모델 파라미터를 찾는 알고리즘)
+print('계수 ,절편 :', lr.coef_, lr.intercept_)  # [39.01714496] -709.0186449535474
 print()
 
 # -------------------------- 선형 회귀 모델 그래프 -----------------------------------------------
@@ -51,7 +51,7 @@ lr.fit(train_poly, train_target)
 print('2차 훈련 score : ', lr.score(train_poly, train_target))
 print('2차 테스트 score :', lr.score(test_poly, test_target))
 print('길이 50인 물고기 무게 예측 :', *lr.predict([[50**2, 50]])) #1573
-print('기울기 ,절편 :', lr.coef_, lr.intercept_) #[  1.01433211 -21.55792498] 116.05021078278259
+print('계수 ,절편 :', lr.coef_, lr.intercept_) #[  1.01433211 -21.55792498] 116.05021078278259
 
 # ---------------------------2차 방정식 선형 회귀 모델 그래프 ---------------------------------------
 r = np.arange(15, 50) # 리스트 사용시 연산 안됨
