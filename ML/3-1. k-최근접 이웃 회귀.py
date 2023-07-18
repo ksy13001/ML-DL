@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 import numpy as np
 
-# k-최근접 이웃 회귀 : k-최근접 이웃 알고리즘을 사용한 회귀 문제로, 가장 가까운 이웃 샘플을 찾고 샘플들의 타깃값을 평균하여 예측한
+# k-최근접 이웃 회귀 알고리즘 : k-최근접 이웃 알고리즘을 사용한 회귀 문제로, 가장 가까운 이웃 샘플을 찾고 샘플들의 타깃값을 평균하여 예측하는 알고리즘
 
 perch_length = np.array([8.4, 13.7, 15.0, 16.2, 17.4, 18.0, 18.7, 19.0, 19.6, 20.0, 21.0,
                          21.0, 21.0, 21.3, 22.0, 22.0, 22.0, 22.0, 22.0, 22.5, 22.5, 22.7,
