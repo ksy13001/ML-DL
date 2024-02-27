@@ -59,3 +59,15 @@ plt.scatter(train_input, train_target)
 plt.scatter(50, 1573, marker='D')
 plt.plot(r, lr.coef_[0]*(r**2) +lr.coef_[1]*r + lr.intercept_, 'r')
 plt.show()
+"""
+import matplotlib.pyplot as plt
+x = np.array(range(15, 50))
+y = lr.intercept_
+for i in range(1, len(lr.coef_)+1):
+    y += lr.coef_[len(lr.coef_)-i] * (x ** i)
+plt.scatter(train_input, train_target)
+plt.plot(x, y, 'orange')
+plt.xlabel('length')
+plt.ylabel('weight')
+plt.show()
+"""
