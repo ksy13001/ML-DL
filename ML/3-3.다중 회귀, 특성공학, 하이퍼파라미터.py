@@ -96,3 +96,5 @@ lasso.fit(train_scaled, train_target)
 print('lasso(alpha = 10) train score: ', lasso.score(train_scaled, train_target))
 print('lasso(alpha = 10) test  score: ', lasso.score(test_scaled, test_target))
 
+#변수 간 상관 관계가 높고 중요도가 유사한 경우에는 릿지 회귀가, 변수 선택이 필요하거나 희소한 모델이 필요한 경우에는 라쏘 회귀가 유용
+
